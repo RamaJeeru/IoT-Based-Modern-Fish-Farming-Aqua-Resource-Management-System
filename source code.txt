@@ -1,0 +1,123 @@
+6.1 Temperature Sensor
+const int analogPin = A0; // Analog pin connected to the temperature sensor
+void setup() {
+ pinMode(A0, INPUT);
+ pinMode(12, OUTPUT);
+ pinMode(8, OUTPUT);
+ Serial.begin(9600); // Initialize serial communication
+}
+void loop() {
+ int sensorValue = analogRead(analogPin); // Read analog value from the temperature sensor
+ float voltage = sensorValue * (5.0 / 1023.0); // Convert analog value to voltage 
+ float temperature = (voltage - 0.5) * 100; // Convert voltage to temperature in degrees celsius 
+ 
+ if (temperature > 30) {
+ digitalWrite(12, HIGH);
+ digitalWrite(8, LOW);
+ } else if (temperature < 25) {
+ digitalWrite(12, LOW);
+ digitalWrite(8, HIGH);
+ } else {
+
+ digitalWrite(12, LOW);
+ digitalWrite(8, LOW);
+ }
+ Serial.print("Analog Value: ");
+ Serial.print(sensorValue);
+ Serial.print(", Voltage: ");
+ Serial.print(voltage);
+ Serial.print("V, Temperature: ");
+ Serial.print(temperature);
+ Serial.println("°C");
+ delay(100); // Delay for stability
+ 
+
+int sensorValue = 0;
+int outputValue = 0;
+void setup()
+{
+ pinMode(A0, INPUT);
+ pinMode(9, OUTPUT);
+ pinMode(6, OUTPUT);
+ Serial.begin(9600);
+}
+
+void loop()
+{
+ sensorValue = analogRead(A0); // read the analog in value
+ outputValue = map(sensorValue, 0, 1023, 0, 255); // map it to the range of the analog out
+ // change the analog out value:
+ if (outputValue > 85) {
+ digitalWrite(9, HIGH);
+ digitalWrite(6, LOW);
+ } else if (outputValue < 65) {
+ digitalWrite(9, LOW);
+ digitalWrite(6, HIGH);
+ } else {
+ digitalWrite(9, LOW);
+ digitalWrite(6, LOW);
+ }
+ // print the results to the serial monitor:
+ Serial.print("sensor = ");
+ Serial.print(sensorValue);
+ Serial.print("\t output = ");
+ Serial.println(outputValue);
+ // wait 2 milliseconds before the next loop for the
+ // analog-to-digital converter to settle after the
+ // last reading:
+ delay(2); // Wait for 2 millisecond(s)}
+
+
+6.3 Dissolved Oxygen Sensor Circuit
+int currentO2Level = 0;
+int wanted02Level = 0;
+void setup()
+{
+ Serial.begin(9600);
+ pinMode(A5, INPUT);
+ pinMode(2, OUTPUT);
+}
+void loop()
+{
+ wanted02Level = 155;
+ Serial.println(currentO2Level);
+ currentO2Level = analogRead(A5);
+ if (currentO2Level < wanted02Level) {
+ digitalWrite(2, HIGH);
+ } else {
+ digitalWrite(2, LOW);
+ }
+ delay(10); // Delay a little bit to improve simulation performance
+}
+
+
+
+6.4 Turbidity sensor circuit
+float adc = 0;
+float U = 0;
+
+float a = 0;
+float b = 0;
+float c = 0;
+float Turbidity = 0;
+void setup()
+{
+ pinMode(A0, INPUT);
+ Serial.begin(9600);
+}
+void loop()
+{
+adc = analogRead(A0); // How to declare adc
+ U = ((5 * adc) / 1023);
+ a = (5742.3 * U);
+ b = (1120.4 * (U * U));
+ c = 4352.9;
+ Turbidity = (a - (b + c));
+ Serial.println(Turbidity);
+ delay(10); // Delay a little bit to improve simulation performance
+if (Turbidity>2000)
+{ digitalWrite(8, HIGH);
+}
+ else {
+ digitalWrite(8, LOW);
+ }} 
